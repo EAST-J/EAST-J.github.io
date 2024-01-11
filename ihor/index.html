@@ -1,1 +1,654 @@
-Project page of AAAI24, to be updated
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9GETVCQ90R"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-9GETVCQ90R');
+  </script>
+
+  <meta charset="utf-8">
+  <meta name="description"
+        content="">
+  <meta name="keywords" content="AAAI 2024">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>In-Hand 3D Object Reconstruction from a Monocular RGB Video</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <!-- <script src="http://popcornjs.org/code/dist/popcorn-complete.js"></script> -->
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">In-Hand 3D Object Reconstruction from a Monocular RGB Video</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://east-j.github.io">Shijian Jiang</a><sup>1</sup>,
+              <a href="https://perple-zju.github.io/">Qi Ye</a><sup>1,2*</sup>,
+                  Rengan Xie<sup>3</sup>,
+                  Yuchi Huo<sup>3,4</sup>,
+                  Xiang Li<sup>5</sup>,
+                  Yang Zhou<sup>5</sup>,
+                  Jiming Chen<sup>1</sup>
+            </span>
+          </div>
+          <br>
+          <div class="is-size-6 publication-authors">
+            <span class="author-block"><sup>1</sup>College of Control Science and Engineering, Zhejiang University &nbsp;&nbsp;</span>
+            <span class="author-block"><sup>2</sup>Key Lab of CS&AUS of Zhejiang Province</span>
+            <span class="author-block"><sup>3</sup>State Key Lab of CAD&CG, Zhejiang University&nbsp;&nbsp;</span>
+            <span class="author-block"><sup>4</sup>Zhejiang Lab&nbsp;&nbsp;</span>
+            <span class="author-block"><sup>5</sup>OPPO US Research Center</span>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: center;">
+            <img src="static/images/zjulogo.png" style="max-height: 150px;">
+            <img src="static/images/oppologo.png" style="max-height: 150px;">
+          </div>
+        
+          <div style="font-size:30px; font-weight: bold;">
+            AAAI 2024
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2312.16425" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=ebo5W0SVD4k" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <!-- <span class="link-block">
+                <a href="" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Our work aims to reconstruct a 3D object that is held and
+            rotated by a hand in front of a static RGB camera. Previous
+            methods that use implicit neural representations to recover
+            the geometry of a generic hand-held object from multi-view
+            images achieved compelling results in the visible part of the
+            object. However, these methods falter in accurately capturing
+            the shape within the hand-object contact region due to occlusion. In this paper, we propose a novel method that deals
+            with surface reconstruction under occlusion by incorporating
+            priors of 2D occlusion elucidation and physical contact constraints. For the former, we introduce an object amodal completion network to infer the 2D complete mask of objects under occlusion. To ensure the accuracy and view consistency
+            of the predicted 2D amodal masks, we devise a joint optimization method for both amodal mask refinement and 3D
+            reconstruction. For the latter, we impose penetration and attraction constraints on the local geometry in contact regions.
+            We evaluate our approach on HO3D and HOD datasets and
+            demonstrate that it outperforms the state-of-the-art methods
+            in terms of reconstruction surface quality, with an improvement of 52% on HO3D and 20% on HOD.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+
+    <center>
+      <h2 class="title is-3">Problem Setup</h2>
+      <img src="./static/videos/problem_setup.gif" width="80%">
+    </center>
+
+
+    <!-- Paper video. -->
+    <br>
+    <br>
+    <br>
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/ebo5W0SVD4k" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Overview</h2>
+        <img src="static/images/pipeline.png" style="max-width: 700px">
+        <p align="left">
+          <strong>Overview of our framework</strong>, consisting of three parts. Hand reconstruction: we optimize the MANO parameters to reconstruct both the hand mesh and camera-relative motion. Amodal completion: by utilizing the amodal completion network, we can recover amodal masks from the input hand and object segmentation maps. Object reconstruction: we learn the 3D objects with the neural implicit field, which is supervised by input images, hand meshes, and amodal masks. To improve the consistency and quality of the predicted amodal masks, we refine them with a semantic head.
+        </p>
+      </div>
+    </div>
+
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+
+<style>
+model-viewer {
+  width: 400px;
+  height: 300px;
+}
+</style>
+
+
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class='title is-3'>Interactive Results</div>
+      <div class='title is-4 has-text-centered'>Dataset</div>
+
+      <div class="columns">
+        <div class="column has-text-centered">
+          <span id="bottle" class="button is-info is-rounded">
+            Bottle
+          </span>
+          <span id="box" class="button is-normal is-rounded">
+            Box
+          </span>
+        </div>
+      </div>
+
+      <!-- <div class='title is-4'>Method 1</div> -->
+      <div class="has-text-centered">
+        <div class="columns">
+          <div class="column has-text-centered ">
+            <span id="1_gt" class="button is-info is-rounded">
+              Ground Truth
+            </span>
+            <span id="1_ours" class="button is-normal is-rounded">
+              Ours
+            </span>
+            <span id="1_hhor" class="button is-normal is-rounded">
+              HHOR
+            </span>
+            <span id="1_neus" class="button is-normal is-rounded">
+              NeuS
+            </span>
+            <span id="1_ihoi" class="button is-normal is-rounded">
+              IHOI
+            </span>
+          </div>
+        </div>
+        <div class="columns is-vcentered">
+          <div class="column is-centered">
+            <!-- TODO: replace with the video -->
+            <span class="link-block">
+              <img src="static/models/Bottle/reference.png" style="max-height: 300px;" height="100%" id="v1">
+            </span>
+          </div>
+          <div class="column is-centered">
+            <span>
+              <model-viewer id="m1" alt="chair"
+              src="static/models/Bottle/gt.glb"
+              shadow-intensity="1"
+              ar environment-image="static/models/thatch_chapel_2k.hdr"
+              auto-rotate rotation-per-second="40deg"
+              camera-controls touch-action="pan-y"
+              >
+              </model-viewer>
+            </span>
+          </div>
+        </div>
+      </div>
+      <br>
+      <!-- <div class='title is-4'>Method 2</div> -->
+      <div class="has-text-centered">
+        <div class="columns">
+          <div class="column has-text-centered">
+            <span id="2_gt" class="button is-normal is-rounded">
+              Ground Truth
+            </span>
+            <span id="2_ours" class="button is-info is-rounded">
+              Ours
+            </span>
+            <span id="2_hhor" class="button is-normal is-rounded">
+              HHOR
+            </span>
+            <span id="2_neus" class="button is-normal is-rounded">
+              NeuS
+            </span>
+            <span id="2_ihoi" class="button is-normal is-rounded">
+              IHOI
+            </span>
+          </div>
+        </div>
+        <div class='columns is-vcentered'>
+          <div class="column is-centered">
+            <span>
+              <!-- <video style="max-height: 300px;" id="v2" autoplay muted loop playsinline height="100%">
+                <source src="https://i.imgur.com/JtkzjxE.mp4"
+                    type="video/mp4">
+              </video> -->
+              <img src="static/models/Bottle/reference.png" style="max-height: 300px;" height="100%" id="v2">
+              <br>
+            </span>
+          </div>
+          <div class="column is-centered">
+            <span>
+              <model-viewer id='m2' alt="chair"
+              src="static/models/Bottle/ours.glb"
+              shadow-intensity="1"
+              ar environment-image="static/models/thatch_chapel_2k.hdr"
+              auto-rotate rotation-per-second="40deg"
+              camera-controls touch-action="pan-y"
+              >
+              </model-viewer>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<br>
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{jiang2023hand,
+      title={In-Hand 3D Object Reconstruction from a Monocular RGB Video},
+      author={Jiang, Shijian and Ye, Qi and Xie, Rengan and Huo, Yuchi and Li, Xiang and Zhou, Yang and Chen, Jiming},
+      journal={arXiv preprint arXiv:2312.16425},
+      year={2023}
+    }</code></pre>
+  </div>
+</section>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class='title is-3'>Contact</div>
+      <div>
+        For questions, feel free to contact Shijian Jiang (jsj630@zju.edu.cn)
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script>
+
+  var data_bottle = {
+    "gt":{
+      "img":"static/models/Bottle/reference.png",
+      "model":"static/models/Bottle/gt.glb"
+    },
+    "ours":{
+      "img":"static/models/Bottle/reference.png",
+      "model":"static/models/Bottle/ours.glb"
+    },
+    "hhor":{
+      "img":"static/models/Bottle/reference.png",
+      "model":"static/models/Bottle/hhor.glb"
+    },
+    "neus":{
+      "img":"static/models/Bottle/reference.png",
+      "model":"static/models/Bottle/neus.glb"
+    },
+    "ihoi":{
+      "img":"static/models/Bottle/reference.png",
+      "model":"static/models/Bottle/ihoi.glb"
+    },
+  }
+  var data_box = {
+    "gt":{
+      "img":"static/models/Box/reference.png",
+      "model":"static/models/Box/gt.glb"
+    },
+    "ours":{
+      "img":"static/models/Box/reference.png",
+      "model":"static/models/Box/ours.glb"
+    },
+    "hhor":{
+      "img":"static/models/Box/reference.png",
+      "model":"static/models/Box/hhor.glb"
+    },
+    "neus":{
+      "img":"static/models/Box/reference.png",
+      "model":"static/models/Box/neus.glb"
+    },
+    "ihoi":{
+      "img":"static/models/Box/reference.png",
+      "model":"static/models/Box/ihoi.glb"
+    },
+  }
+
+
+
+
+  data = data_bottle;
+  function sync1to2video() {
+    document.getElementById('v1').currentTime = 0;
+    document.getElementById('v2').currentTime = 0;
+  }
+
+  v1 = document.getElementById("v1")
+  v2 = document.getElementById("v2")
+
+  m1 = document.getElementById("m1")
+  m2 = document.getElementById("m2")
+
+
+  method1 = 'gt';
+  method2 = 'ours';
+
+  function update_buttons()
+  {
+    document.getElementById('bottle').className = 'button is-normal is-rounded';
+    document.getElementById('box').className = 'button is-normal is-rounded';
+    // document.getElementById('mug').className = 'button is-normal is-rounded';
+
+
+    v1.setAttribute('src', data[method1]['img']);
+    m1.setAttribute('src', data[method1]['model']);
+
+    v2.setAttribute('src', data[method2]['img']);
+    m2.setAttribute('src', data[method2]['model']);
+  }
+  // DATA LOADING
+  btn_bottle = document.getElementById('bottle');
+  btn_bottle.addEventListener('click', function onClick() {
+    data = data_bottle;
+    update_buttons();
+    btn_bottle.className = 'button is-info is-rounded';
+    // set the video
+  });
+
+  btn_box = document.getElementById('box');
+  btn_box.addEventListener('click', function onClick() {
+    data = data_box;
+    update_buttons();
+    btn_box.className = 'button is-info is-rounded';
+    // set the video
+  });
+
+
+
+  btn_1gt = document.getElementById('1_gt');
+  btn_1gt.addEventListener('click', function onClick() {
+
+    btn_1gt.className = 'button is-info is-rounded';
+    // document.getElementById('1_gt').className = 'button is-normal is-rounded';
+    document.getElementById('1_ours').className = 'button is-normal is-rounded';
+    document.getElementById('1_hhor').className = 'button is-normal is-rounded';
+    document.getElementById('1_neus').className = 'button is-normal is-rounded';
+    document.getElementById('1_ihoi').className = 'button is-normal is-rounded';
+    // set the video
+    v1.setAttribute('src', data['gt']['img']);
+    m1.setAttribute('src', data['gt']['model']);
+    method1 = "gt";
+    sync1to2video();
+  });
+
+  btn_ours1 = document.getElementById('1_ours');
+  btn_ours1.addEventListener('click', function onClick() {
+
+    btn_ours1.className = 'button is-info is-rounded';
+    document.getElementById('1_gt').className = 'button is-normal is-rounded';
+    //document.getElementById('1_ours').className = 'button is-normal is-rounded';
+    document.getElementById('1_hhor').className = 'button is-normal is-rounded';
+    document.getElementById('1_neus').className = 'button is-normal is-rounded';
+    document.getElementById('1_ihoi').className = 'button is-normal is-rounded';
+
+    v1.setAttribute('src', data['ours']['img']);
+    m1.setAttribute('src', data['ours']['model']);
+    method1 = "ours";
+    sync1to2video();
+
+  });
+
+  btn_1hhor = document.getElementById('1_hhor');
+  btn_1hhor.addEventListener('click', function onClick() {
+
+    btn_1hhor.className = 'button is-info is-rounded';
+    document.getElementById('1_gt').className = 'button is-normal is-rounded';
+    document.getElementById('1_ours').className = 'button is-normal is-rounded';
+    //document.getElementById('1_hhor').className = 'button is-normal is-rounded';
+    document.getElementById('1_neus').className = 'button is-normal is-rounded';
+    document.getElementById('1_ihoi').className = 'button is-normal is-rounded';
+
+    v1.setAttribute('src', data['hhor']['img']);
+    m1.setAttribute('src', data['hhor']['model']);
+    method1 = "hhor";
+    sync1to2video();
+
+  });
+
+  btn_1neus = document.getElementById('1_neus');
+  btn_1neus.addEventListener('click', function onClick() {
+
+    btn_1neus.className = 'button is-info is-rounded';
+    document.getElementById('1_gt').className = 'button is-normal is-rounded';
+    document.getElementById('1_ours').className = 'button is-normal is-rounded';
+    document.getElementById('1_hhor').className = 'button is-normal is-rounded';
+    //document.getElementById('1_neus').className = 'button is-normal is-rounded';
+    document.getElementById('1_ihoi').className = 'button is-normal is-rounded';
+
+    v1.setAttribute('src', data['neus']['img']);
+    m1.setAttribute('src', data['neus']['model']);
+    method1 = "neus";
+    sync1to2video();
+
+  });
+
+  btn_1ihoi = document.getElementById('1_ihoi');
+  btn_1ihoi.addEventListener('click', function onClick() {
+
+    btn_1ihoi.className = 'button is-info is-rounded';
+    document.getElementById('1_gt').className = 'button is-normal is-rounded';
+    document.getElementById('1_ours').className = 'button is-normal is-rounded';
+    document.getElementById('1_hhor').className = 'button is-normal is-rounded';
+    document.getElementById('1_neus').className = 'button is-normal is-rounded';
+    //document.getElementById('1_ihoi').className = 'button is-normal is-rounded';
+
+    v1.setAttribute('src', data['ihoi']['img']);
+    m1.setAttribute('src', data['ihoi']['model']);
+    method1 = "ihoi";
+    sync1to2video();
+
+  });
+
+
+// 222222
+
+
+btn_2gt = document.getElementById('2_gt');
+btn_2gt.addEventListener('click', function onClick() {
+
+  btn_2gt.className = 'button is-info is-rounded';
+  // document.getElementById('2_gt').className = 'button is-normal is-rounded';
+  document.getElementById('2_ours').className = 'button is-normal is-rounded';
+  document.getElementById('2_hhor').className = 'button is-normal is-rounded';
+  document.getElementById('2_neus').className = 'button is-normal is-rounded';
+  document.getElementById('2_ihoi').className = 'button is-normal is-rounded';
+  // set the video
+  v2.setAttribute('src', data['gt']['img']);
+  m2.setAttribute('src', data['gt']['model']);
+  method2 = "gt";
+  sync1to2video();
+});
+
+btn_ours2 = document.getElementById('2_ours');
+btn_ours2.addEventListener('click', function onClick() {
+
+  btn_ours2.className = 'button is-info is-rounded';
+  document.getElementById('2_gt').className = 'button is-normal is-rounded';
+  //document.getElementById('2_ours').className = 'button is-normal is-rounded';
+  document.getElementById('2_hhor').className = 'button is-normal is-rounded';
+  document.getElementById('2_neus').className = 'button is-normal is-rounded';
+  document.getElementById('2_ihoi').className = 'button is-normal is-rounded';
+
+  v2.setAttribute('src', data['ours']['img']);
+  m2.setAttribute('src', data['ours']['model']);
+  method2 = "ours";
+  sync1to2video();
+
+});
+
+btn_2hhor = document.getElementById('2_hhor');
+btn_2hhor.addEventListener('click', function onClick() {
+
+  btn_2hhor.className = 'button is-info is-rounded';
+  document.getElementById('2_gt').className = 'button is-normal is-rounded';
+  document.getElementById('2_ours').className = 'button is-normal is-rounded';
+  //document.getElementById('2_hhor').className = 'button is-normal is-rounded';
+  document.getElementById('2_neus').className = 'button is-normal is-rounded';
+  document.getElementById('2_ihoi').className = 'button is-normal is-rounded';
+
+  v2.setAttribute('src', data['ours']['img']);
+  m2.setAttribute('src', data['ours']['model']);
+  method2 = "hhor";
+  sync1to2video();
+
+});
+
+btn_2neus = document.getElementById('2_neus');
+btn_2neus.addEventListener('click', function onClick() {
+
+  btn_2neus.className = 'button is-info is-rounded';
+  document.getElementById('2_gt').className = 'button is-normal is-rounded';
+  document.getElementById('2_ours').className = 'button is-normal is-rounded';
+  document.getElementById('2_hhor').className = 'button is-normal is-rounded';
+  //document.getElementById('2_neus').className = 'button is-normal is-rounded';
+  document.getElementById('2_ihoi').className = 'button is-normal is-rounded';
+
+  v2.setAttribute('src', data['ours']['img']);
+  m2.setAttribute('src', data['ours']['model']);
+  method2 = "neus";
+  sync1to2video();
+
+});
+
+btn_2ihoi = document.getElementById('2_ihoi');
+btn_2ihoi.addEventListener('click', function onClick() {
+
+  btn_2ihoi.className = 'button is-info is-rounded';
+  document.getElementById('2_gt').className = 'button is-normal is-rounded';
+  document.getElementById('2_ours').className = 'button is-normal is-rounded';
+  document.getElementById('2_hhor').className = 'button is-normal is-rounded';
+  document.getElementById('2_neus').className = 'button is-normal is-rounded';
+  //document.getElementById('2_ihoi').className = 'button is-normal is-rounded';
+
+  v2.setAttribute('src', data['ours']['img']);
+  m2.setAttribute('src', data['ours']['model']);
+  method2 = "ihoi";
+  sync1to2video();
+
+});
+
+// Original script to synchronize playback of two HTML5 video windows
+  // by Adam Pierce.
+  // http://siliconsparrow.com/synchronize-two-video-replays-using-javascript/
+  // This script is public domain. You can copy, modify and share it as much
+  // as you like.
+
+  // sync 2nd (right) video to playing position of 1st (left) video
+  window.onload = function(){
+        var v1 = document.getElementById('v1');
+        // console.log("YEAH");
+        v1.addEventListener("play", function() {
+          document.getElementById('v2').play();
+        });
+
+        v1.addEventListener("pause", function() {
+          document.getElementById('v2').pause();
+        });
+
+        v1.addEventListener("seeking", function() {
+          document.getElementById('v2').currentTime = v1.currentTime;
+        });
+
+        v1.addEventListener("seeked", function() {
+          document.getElementById('v2').currentTime = v1.currentTime;
+        });
+        v1.addEventListener("onloadstart", function() {
+          document.getElementById('v2').currentTime = v1.currentTime;
+        });
+
+  }
+
+</script>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Website taken from
+              <a href="https://github.com/bundlesdf/bundlesdf.github.io">here</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
